@@ -27,20 +27,36 @@ public class Assignment5_StringManipulation {
             }
 
             switch (choice) {
-                case 1 -> task1(scanner);
-                case 2 -> task2(scanner);
-                case 3 -> task3(scanner);
-                case 4 -> task4(scanner);
-                case 5 -> task5(scanner);
-                case 6 -> task6(scanner);
-                case 7 -> task7(scanner);
-                case 8 -> task8(scanner);
-                case 0 -> {
+                case 1:
+                    task1(scanner);
+                    break;
+                case 2:
+                    task2(scanner);
+                    break;
+                case 3:
+                    task3(scanner);
+                    break;
+                case 4:
+                    task4(scanner);
+                    break;
+                case 5:
+                    task5(scanner);
+                    break;
+                case 6:
+                    task6(scanner);
+                    break;
+                case 7:
+                    task7(scanner);
+                    break;
+                case 8:
+                    task8(scanner);
+                    break;
+                case 0:
                     System.out.println("До свидания! Удачи со сдачей задания :)");
                     scanner.close();
                     return;
-                }
-                default -> System.out.println("Неверный выбор! Попробуйте снова.");
+                default:
+                    System.out.println("Неверный выбор! Попробуйте снова.");
             }
         }
     }
@@ -50,8 +66,14 @@ public class Assignment5_StringManipulation {
         System.out.print("Enter a string: ");
         String input = scanner.nextLine();
 
-        // TODO: Подсчитать количество гласных (a, e, i, o, u)
         int count = 0;
+        String lower = input.toLowerCase();
+        for (int i = 0; i < lower.length(); i++) {
+            char c = lower.charAt(i);
+            if (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u') {
+                count++;
+            }
+        }
 
         System.out.println("Number of vowels: " + count);
     }
@@ -61,8 +83,7 @@ public class Assignment5_StringManipulation {
         System.out.print("Enter a string: ");
         String input = scanner.nextLine();
 
-        // TODO: Вывести строку в обратном порядке
-        String reversed = "";
+        String reversed = new StringBuilder(input).reverse().toString();
 
         System.out.println(reversed);
     }
@@ -72,8 +93,9 @@ public class Assignment5_StringManipulation {
         System.out.print("Enter a string: ");
         String input = scanner.nextLine();
 
-        // TODO: Проверить, является ли строка палиндромом (игнорировать регистр)
-        boolean isPalindrome = false;
+        String lower = input.toLowerCase();
+        String rev = new StringBuilder(lower).reverse().toString();
+        boolean isPalindrome = lower.equals(rev);
 
         System.out.println(isPalindrome ? "Yes" : "No");
     }
@@ -83,8 +105,11 @@ public class Assignment5_StringManipulation {
         System.out.print("Enter a sentence: ");
         String sentence = scanner.nextLine();
 
-        // TODO: Подсчитать количество слов в предложении
         int wordCount = 0;
+        String trimmed = sentence.trim();
+        if (!trimmed.isEmpty()) {
+            wordCount = trimmed.split("\\s+").length;
+        }
 
         System.out.println("Number of words: " + wordCount);
     }
@@ -94,8 +119,7 @@ public class Assignment5_StringManipulation {
         System.out.print("Enter a string: ");
         String input = scanner.nextLine();
 
-        // TODO: Удалить все пробелы из строки
-        String noSpaces = "";
+        String noSpaces = input.replace(" ", "");
 
         System.out.println(noSpaces);
     }
@@ -105,8 +129,18 @@ public class Assignment5_StringManipulation {
         System.out.print("Enter a sentence: ");
         String sentence = scanner.nextLine();
 
-        // TODO: Преобразовать первую букву каждого слова в заглавную
-        String result = "";
+        String[] words = sentence.trim().split("\\s+");
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < words.length; i++) {
+            if (!words[i].isEmpty()) {
+                sb.append(Character.toUpperCase(words[i].charAt(0)));
+                sb.append(words[i].substring(1));
+            }
+            if (i < words.length - 1) {
+                sb.append(" ");
+            }
+        }
+        String result = sb.toString();
 
         System.out.println(result);
     }
@@ -116,8 +150,20 @@ public class Assignment5_StringManipulation {
         System.out.print("Enter a string: ");
         String input = scanner.nextLine();
 
-        // TODO: Найти символ, который встречается чаще всего
-        char mostFrequent = ' ';
+        if (input.isEmpty()) {
+            System.out.println("The string is empty!");
+            return;
+        }
+        int[] freq = new int[256];
+        for (int i = 0; i < input.length(); i++) {
+            freq[input.charAt(i)]++;
+        }
+        char mostFrequent = input.charAt(0);
+        for (int i = 1; i < input.length(); i++) {
+            if (freq[input.charAt(i)] > freq[mostFrequent]) {
+                mostFrequent = input.charAt(i);
+            }
+        }
 
         System.out.println("The most frequent character is: " + mostFrequent);
     }
@@ -129,8 +175,11 @@ public class Assignment5_StringManipulation {
         System.out.print("Enter second string: ");
         String str2 = scanner.nextLine();
 
-        // TODO: Проверить, являются ли две строки анаграммами (игнорировать пробелы и регистр)
-        boolean areAnagrams = false;
+        char[] a = str1.replaceAll("\\s", "").toLowerCase().toCharArray();
+        char[] b = str2.replaceAll("\\s", "").toLowerCase().toCharArray();
+        java.util.Arrays.sort(a);
+        java.util.Arrays.sort(b);
+        boolean areAnagrams = java.util.Arrays.equals(a, b);
 
         System.out.println(areAnagrams ? "Yes" : "No");
     }
